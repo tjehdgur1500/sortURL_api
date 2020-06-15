@@ -1,6 +1,8 @@
 from django.shortcuts import render
 from django.contrib.auth.models import User
 from rest_framework.viewsets import ModelViewSet
+
+from sorten.paginations import IdPagination
 from .serializer import UserSerializer
 from .permissions import IsOwner
 from rest_framework.authtoken.views import ObtainAuthToken
@@ -12,6 +14,7 @@ class UserViewSet(ModelViewSet):
     queryset = User.objects.all()
     serializer_class = UserSerializer
     permission_classes = [IsOwner]
+    pagination_class = IdPagination
 
 
 class CustomAuthToken(ObtainAuthToken):

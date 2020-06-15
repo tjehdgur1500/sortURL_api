@@ -20,6 +20,7 @@ from users.views import CustomAuthToken
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('users/', include('users.urls')),
+    path('sorts/', include('sorten.urls')),
     path('api-auth/', include('rest_framework.urls')),
     path('api-token-auth/', CustomAuthToken.as_view()),
 ]

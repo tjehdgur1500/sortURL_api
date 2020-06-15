@@ -4,4 +4,5 @@ ENV = 'dev'
 
 INSTALLED_APPS += [
     'users',
+    'sorten',
 ]
