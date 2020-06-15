@@ -1,12 +1,14 @@
 from django.contrib.auth.models import User
 from rest_framework import serializers
-
+from sorten.serializer import SortenSerializer
 
 class UserSerializer(serializers.ModelSerializer):
 
+    urls = SortenSerializer(many=True, read_only=True)
+
     class Meta :
         model = User
-        fields = ('id', 'username', 'password', 'email', )
+        fields = ('id', 'username', 'password', 'email', 'urls', )
         extra_kwargs = {'password': {'write_only': True}}
 
     def create(self, validated_data):
