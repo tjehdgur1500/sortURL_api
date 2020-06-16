@@ -6,7 +6,6 @@ from .paginations import IdPagination
 from .serializer import SortenSerializer
 from .permissions import IsOwner
 
-
 class SortenViewSet(ModelViewSet):
     queryset = Sorten.objects.all()
     serializer_class = SortenSerializer
@@ -22,7 +21,6 @@ class SortenViewSet(ModelViewSet):
             return super().get_queryset()
 
     def perform_create(self, serializer):
-
         serializer.save(
             owner=self.request.user
         )
