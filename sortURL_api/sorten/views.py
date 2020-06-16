@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from rest_framework.viewsets import ModelViewSet
+from random import randint
 from .models import Sorten
 from .paginations import IdPagination
 from .serializer import SortenSerializer
@@ -25,3 +26,19 @@ class SortenViewSet(ModelViewSet):
         serializer.save(
             owner=self.request.user
         )
+
+    # url shorten
+    def create_short_url(self):
+
+        random_int = self.random_num_create()
+
+        Sorten.objects.get(random_int=random_int)
+
+        url_obj = Sorten(random_int=random_int)
+        url_obj.save()
+        return url_obj
+
+    def random_num_create(self):
+        num = self.randint(1, 218340105584895)
+        return num
+

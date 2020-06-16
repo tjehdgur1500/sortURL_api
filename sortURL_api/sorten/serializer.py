@@ -6,4 +6,4 @@ class SortenSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Sorten
-        fields = ('id', 'selfurl',)
+        fields = ('id', 'selfurl','random_int')
