@@ -6,4 +6,4 @@ class SortenSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Sorten
-        fields = ('id', 'selfurl', 'sorturl',)
+        fields = ('id', 'selfurl',)

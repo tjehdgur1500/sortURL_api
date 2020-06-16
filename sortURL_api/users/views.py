@@ -1,5 +1,7 @@
 from django.shortcuts import render
 from django.contrib.auth.models import User
+from rest_framework import status
+from rest_framework.views import APIView
 from rest_framework.viewsets import ModelViewSet
 
 from sorten.paginations import IdPagination
@@ -15,6 +17,12 @@ class UserViewSet(ModelViewSet):
     serializer_class = UserSerializer
     permission_classes = [IsOwner]
     pagination_class = IdPagination
+
+
+class Logout(APIView):
+    def get(self, request):
+        request.user.auth_token.delete()
+        return Response(status=status.HTTP_200_OK)
 
 
 class CustomAuthToken(ObtainAuthToken):

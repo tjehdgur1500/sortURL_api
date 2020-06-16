@@ -15,7 +15,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path,include
-from users.views import CustomAuthToken
+from users.views import CustomAuthToken, Logout
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -23,4 +23,5 @@ urlpatterns = [
     path('sorts/', include('sorten.urls')),
     path('api-auth/', include('rest_framework.urls')),
     path('api-token-auth/', CustomAuthToken.as_view()),
+    path('logout/', Logout.as_view()),
 ]
