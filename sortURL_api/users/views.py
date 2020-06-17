@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from django.contrib.auth.models import User
 from rest_framework import status
+from rest_framework.decorators import action
 from rest_framework.views import APIView
 from rest_framework.viewsets import ModelViewSet
 
@@ -18,16 +19,13 @@ class UserViewSet(ModelViewSet):
     permission_classes = [IsOwner]
     pagination_class = IdPagination
 
-
-class Logout(APIView):
-    def get(self, request):
+    @action(methods=['DELETE'], detail=False)
+    def logout(self, request, *args, **kwargs):
         request.user.auth_token.delete()
-        return Response(status=status.HTTP_200_OK)
+        return Response(status=status.HTTP_204_NO_CONTENT)
 
-
-class CustomAuthToken(ObtainAuthToken):
-
-    def post(self, request, *args, **kwargs):
+    @action(methods=['POST'], detail=False)
+    def login(self, request, *args, **kwargs):
         serializer = self.serializer_class(data=request.data,
                                            context={'request': request})
         serializer.is_valid(raise_exception=True)

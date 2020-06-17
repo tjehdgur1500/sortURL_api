@@ -4,6 +4,9 @@ from .models import Sorten
 
 class SortenSerializer(serializers.ModelSerializer):
 
+    shorturl = serializers.ReadOnlyField()
+
     class Meta:
         model = Sorten
-        fields = ('id', 'selfurl','random_int')
+        fields = ('id', 'selfurl', 'shorturl')
+
