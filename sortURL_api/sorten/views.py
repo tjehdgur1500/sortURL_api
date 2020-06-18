@@ -1,4 +1,5 @@
 import base62
+from collections import Counter
 from django.http import HttpResponseRedirect
 from rest_framework import mixins
 from rest_framework.viewsets import ModelViewSet, GenericViewSet
@@ -26,18 +27,20 @@ class SortenViewSet(ModelViewSet):
     def perform_create(self, serializer):
         a = Sorten.objects.last()
         if a is None:
-            marge = 1
+            merge = 1
         else:
-            marge = a.id + 1
-        marge = base62.encode(marge)
+            merge = a.id + 1
+        merge = base62.encode(merge)
 
         if self.request.user.is_anonymous:
             c = None
         else:
             c = self.request.user
+
         serializer.save(
             owner=c,
-            shorturl=marge,
+            shorturl=merge,
+
         )
 
     def create(self, request, *args, **kwargs):
@@ -55,4 +58,6 @@ class RetriveViewSet(mixins.RetrieveModelMixin, GenericViewSet):
     def retrieve(self, request, *args, **kwargs):
         instance = self.get_object()
         serializer = self.get_serializer(instance)
+        instance.count += 1
+        instance.save()
         return HttpResponseRedirect(serializer.data['selfurl'])
