@@ -4,10 +4,10 @@ from .models import Sorten
 
 class SortenSerializer(serializers.ModelSerializer):
 
-    shorturl = serializers.ReadOnlyField()
     count = serializers.ReadOnlyField()
+    responseurl = serializers.ReadOnlyField()
 
     class Meta:
         model = Sorten
-        fields = ('id', 'selfurl', 'shorturl', 'count')
+        fields = ('id', 'selfurl', 'responseurl', 'count')
 

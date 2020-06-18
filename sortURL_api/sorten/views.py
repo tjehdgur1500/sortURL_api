@@ -24,6 +24,12 @@ class SortenViewSet(ModelViewSet):
         else:
             return super().get_queryset()
 
+    # def create(self, request, *args, **kwargs):
+    #     response = super().create(request, *args, **kwargs)
+    #     short_url = f"{request.scheme}://{request.get_host()}/sorts/cuturl/{response.data['shorturl']}"
+    #     response.data['shorturl'] = short_url
+    #     return response
+
     def perform_create(self, serializer):
         a = Sorten.objects.last()
         if a is None:
@@ -36,18 +42,13 @@ class SortenViewSet(ModelViewSet):
             c = None
         else:
             c = self.request.user
-
+        responseurl = f"{self.request.scheme}://{self.request.get_host()}/sorts/cuturl/{merge}"
         serializer.save(
             owner=c,
             shorturl=merge,
+            responseurl=responseurl,
 
         )
-
-    def create(self, request, *args, **kwargs):
-        response = super().create(request, *args, **kwargs)
-        short_url = f"{request.scheme}://{request.get_host()}/sorts/cuturl/{response.data['shorturl']}"
-        response.data['shorturl'] = short_url
-        return response
 
 
 class RetriveViewSet(mixins.RetrieveModelMixin, GenericViewSet):
