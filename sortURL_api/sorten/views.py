@@ -30,8 +30,13 @@ class SortenViewSet(ModelViewSet):
         else:
             marge = a.id + 1
         marge = base62.encode(marge)
+
+        if self.request.user.is_anonymous:
+            c = None
+        else:
+            c = self.request.user
         serializer.save(
-            owner=self.request.user,
+            owner=c,
             shorturl=marge,
         )
 
